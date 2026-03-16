@@ -5,7 +5,9 @@ Copy-paste into Google AI Studio (aistudio.google.com) to iterate quickly.
 
 ---
 
-## Prompt 1: Carousel — AI Tools Discovery
+## Prompt 1a: Carousel Structure & Copy
+
+Use this prompt first to generate the carousel text and captions.
 
 ```
 SYSTEM: You write social media content for an AI literacy account targeting adults 25-45.
@@ -16,18 +18,47 @@ Always end Instagram posts with a CTA.
 USER: Create a 6-slide Instagram carousel about "5 free AI tools most people don't know exist."
 
 For each slide, provide:
-- The text that appears on the slide (keep it SHORT — 15 words max per slide)
-- A brief design note
+- headline: Bold text for the slide (10 words max)
+- body: 1-2 lines of supporting text (optional for hook/CTA slides)
 
 Then write:
 1. The full Instagram caption (casual tone, 3-5 hashtags, CTA)
 2. A Twitter/X version (under 280 chars)
-3. A 1-sentence image concept description
 
-Return as JSON with keys: slides[], ig_caption, twitter_post, image_concept
+Return as JSON with keys: slides[{slide_number, headline, body}], ig_caption, twitter_post
 ```
 
 **What to tune:** If the output uses banned phrases, sounds too corporate, or the hooks are weak, add examples of good hooks to the system prompt. If slides are too wordy, emphasize the word limit.
+
+---
+
+## Prompt 1b: Per-Slide Image Prompt
+
+Run this prompt once for EACH slide from Prompt 1a. Replace the slide details each time.
+
+```
+SYSTEM: You write image generation prompts for Instagram carousel slides.
+Design style: dark background, bold white sans-serif text, accent color highlights, clean and minimal.
+
+USER: Write an image generation prompt for this carousel slide:
+
+CAROUSEL TOPIC: 5 free AI tools most people don't know exist
+SLIDE 2 OF 6
+HEADLINE: "Perplexity AI"
+BODY: "Like Google search, but it actually answers your question. No ads, no fluff."
+
+Constraints:
+- Dark background (black or near-black)
+- Bold white sans-serif headline
+- Accent color for emphasis (electric blue, neon green, or warm orange)
+- 1080x1080 Instagram square format
+- Text must be readable and prominent
+- Simple icon or illustration if relevant (flat style, not 3D)
+
+Write a 2-3 sentence image generation prompt that's specific about layout, colors, and visual elements.
+```
+
+**What to tune:** Adjust the design constraints to match your visual identity once established. If image generators produce cluttered results, emphasize "minimal" and "clean" more. If text is hard to read in generated images, add "large bold text as the primary focal point."
 
 ---
 

@@ -69,6 +69,26 @@ def format_breaking_news_email(story: dict, twitter_post: str, ig_caption: str, 
     """
 
 
+def _format_slide_image_prompts(post: dict) -> str:
+    """Format per-slide image prompts for carousel posts."""
+    image_prompts = post.get("image_prompts", [])
+    if not image_prompts:
+        return ""
+
+    slides_html = ""
+    for ip in image_prompts:
+        slides_html += f"""
+        <div style="background: #1a1a1a; color: #fff; padding: 10px 14px; border-radius: 6px; margin: 6px 0; font-family: monospace; font-size: 13px;">
+            <strong>Slide {ip.get('slide_number', '?')}:</strong> {ip.get('image_prompt', '')}
+        </div>
+        """
+
+    return f"""
+    <h4>Image Prompts (per slide — paste each into your image generator)</h4>
+    {slides_html}
+    """
+
+
 def format_daily_digest_email(posts: list[dict]) -> str:
     """Format multiple daily content pieces into a single HTML digest."""
     sections = []
@@ -89,6 +109,7 @@ def format_daily_digest_email(posts: list[dict]) -> str:
         <p><em>({len(post.get('twitter_post', ''))} chars)</em></p>
         <h4>Image Concept</h4>
         <p>{post.get('image_concept', '')}</p>
+        {_format_slide_image_prompts(post)}
         <hr style="border: 2px solid #333;">
         """)
     return f"""

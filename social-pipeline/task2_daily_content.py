@@ -103,7 +103,10 @@ def pick_topics(state: dict) -> list[str]:
 
 
 def generate_content_piece(fmt: dict, topic: str, context: str) -> dict:
-    """Generate a single content piece."""
+    """Generate a single content piece. For carousels, generates per-slide image prompts."""
+    if fmt["name"] == "carousel":
+        return _generate_carousel(topic, fmt, context)
+
     prompt = f"""Generate social media content for an AI literacy account.
 
 CONTENT PILLAR: {topic}
@@ -128,10 +131,84 @@ Return JSON:
   "ig_caption": "<full instagram caption>",
   "twitter_post": "<280 char twitter version>",
   "image_concept": "<1 sentence image description>",
-  "slides": ["<slide 1>", "<slide 2>", "..."]  // only for carousel format, otherwise empty array
+  "slides": []
 }}
 """
     return generate_json(prompt)
+
+
+def _generate_carousel(topic: str, fmt: dict, context: str) -> dict:
+    """Generate a carousel with individual image prompts per slide."""
+    # Step 1: Generate the carousel structure and copy
+    structure_prompt = f"""Generate an Instagram carousel for an AI literacy account.
+
+CONTENT PILLAR: {topic}
+{fmt['instruction']}
+
+CONTEXT FROM PAST PERFORMANCE:
+{context}
+
+TODAY'S DATE: {datetime.now(timezone.utc).strftime('%B %d, %Y')}
+
+Generate the carousel structure and captions. Each slide needs:
+- headline: Bold text for the slide (10 words max)
+- body: 1-2 supporting lines (optional, skip for hook/CTA slides)
+
+Also generate the Instagram caption and Twitter post.
+
+Return JSON:
+{{
+  "hook": "<the hook line from slide 1>",
+  "topic": "{topic}",
+  "format": "carousel",
+  "slides": [
+    {{"slide_number": 1, "headline": "<hook text>", "body": ""}},
+    {{"slide_number": 2, "headline": "<point>", "body": "<detail>"}},
+    ...
+  ],
+  "ig_caption": "<full instagram caption with 3-5 hashtags and CTA>",
+  "twitter_post": "<under 280 chars, 2-3 hashtags>"
+}}
+"""
+    result = generate_json(structure_prompt)
+
+    # Step 2: Generate an individual image prompt for each slide
+    slides = result.get("slides", [])
+    image_prompts = []
+    for slide in slides:
+        img_prompt = f"""Write a detailed image generation prompt for one slide of an Instagram carousel.
+
+CAROUSEL TOPIC: {topic}
+SLIDE {slide.get('slide_number', '?')} OF {len(slides)}
+HEADLINE TEXT ON SLIDE: {slide.get('headline', '')}
+BODY TEXT ON SLIDE: {slide.get('body', '')}
+
+Design constraints:
+- Dark background (black or near-black)
+- Bold white sans-serif headline text
+- Accent color for emphasis (electric blue, neon green, or warm orange)
+- Clean, minimal layout — no clutter
+- 1080x1080 Instagram square format
+- Text must be readable and prominent
+- If relevant, include a simple icon or illustration (flat style, not 3D)
+
+Write a single image generation prompt (2-3 sentences) that an AI image tool could use to create this slide. Be specific about layout, colors, and visual elements.
+
+Return JSON:
+{{"slide_number": {slide.get('slide_number', 0)}, "image_prompt": "<the prompt>"}}
+"""
+        try:
+            img_result = generate_json(img_prompt)
+            image_prompts.append(img_result)
+        except Exception as e:
+            logger.warning(f"Failed to generate image prompt for slide {slide.get('slide_number')}: {e}")
+            image_prompts.append({
+                "slide_number": slide.get("slide_number", 0),
+                "image_prompt": f"Dark background, bold white text: '{slide.get('headline', '')}'. Minimal, clean design. 1080x1080.",
+            })
+
+    result["image_prompts"] = image_prompts
+    return result
 
 
 def run():
