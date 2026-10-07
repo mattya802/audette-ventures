@@ -3,616 +3,384 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Matt Audette — Engineering Leader &amp; Builder</title>
-  <meta name="description" content="Matt Audette is an engineering leader who builds and ships products on the side through Audette Ventures — including Basis, Your Tour, and Bench Boss.">
-  <meta property="og:title" content="Matt Audette — Engineering Leader &amp; Builder">
-  <meta property="og:description" content="Engineering leader by day, product builder by night. Basis, Your Tour, and Bench Boss.">
+  <title>Matt Audette</title>
+  <meta name="description" content="Matt Audette: engineering leader with 15+ years in software. Builder of Basis, Your Tour, and Bench Boss.">
+  <meta property="og:title" content="Matt Audette">
+  <meta property="og:description" content="Engineering leader, builder, dad, golfer. Basis, Your Tour, and Bench Boss.">
   <meta property="og:url" content="https://audetteventures.com">
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 
     :root {
-      --bg: #0a0a0a;
-      --bg-raised: #121211;
-      --fg: #e8e4df;
-      --fg-muted: #8a847d;
-      --accent: #c4a46c;
-      --accent-dim: #9a7d4e;
-      --line: rgba(255,255,255,0.07);
-      --serif: 'Instrument Serif', Georgia, serif;
-      --sans: 'DM Sans', system-ui, sans-serif;
+      --paper: #f3ede1;
+      --sheet: #fbf8f1;
+      --ink: #23201b;
+      --ink-soft: #5b544a;
+      --rule: #23201b;
+      --faint: #d8cfbd;
+      --red: #b0402a;
+      --hi: #f2dc8c;
+      --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+      --mono: 'IBM Plex Mono', 'Courier New', monospace;
     }
 
-    html { scroll-behavior: smooth }
+    html, body { height: 100% }
 
     body {
-      background: var(--bg);
-      color: var(--fg);
-      font-family: var(--sans);
-      font-weight: 400;
-      line-height: 1.6;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 17px;
+      line-height: 1.5;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
     }
 
-    /* --- Grain overlay --- */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.03;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      background-size: 256px 256px;
-      z-index: 9999;
+    a { color: var(--red); text-underline-offset: 2px; text-decoration-thickness: 1px }
+    a:hover { background: var(--hi); color: var(--ink) }
+
+    /* The page is one sheet of paper, sized to the window */
+    .sheet {
+      height: 100vh;
+      padding: 22px;
     }
 
-    a { color: inherit }
-
-    .container {
-      width: 100%;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
-
-    /* --- Header --- */
-    header {
-      padding: 2.5rem 0;
-      opacity: 0;
-      animation: fadeDown 0.8s ease forwards;
-    }
-
-    .header-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .wordmark {
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--fg-muted);
-      text-decoration: none;
-    }
-
-    nav {
-      display: flex;
-      gap: 2rem;
-    }
-
-    nav a {
-      font-size: 0.85rem;
-      color: var(--fg-muted);
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    nav a:hover { color: var(--accent) }
-
-    /* --- Hero --- */
-    .hero {
-      padding: 5rem 0 6rem;
-    }
-
-    .eyebrow {
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--accent-dim);
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeUp 1s ease 0.1s forwards;
-    }
-
-    .hero h1 {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: clamp(3rem, 8vw, 6.5rem);
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-      max-width: 15ch;
-      opacity: 0;
-      animation: fadeUp 1s ease 0.2s forwards;
-    }
-
-    .hero h1 em {
-      font-style: italic;
-      color: var(--accent);
-    }
-
-    .hero-sub {
-      margin-top: 2.5rem;
-      max-width: 52ch;
-      font-size: 1.15rem;
-      line-height: 1.7;
-      color: var(--fg-muted);
-      opacity: 0;
-      animation: fadeUp 1s ease 0.45s forwards;
-    }
-
-    .hero-links {
-      margin-top: 2.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      opacity: 0;
-      animation: fadeUp 1s ease 0.6s forwards;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.8rem 1.4rem;
-      border-radius: 999px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      text-decoration: none;
-      transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: #0a0a0a;
-    }
-
-    .btn-primary:hover { background: #d4b67f }
-
-    .btn-ghost {
-      border: 1px solid var(--line);
-      color: var(--fg);
-    }
-
-    .btn-ghost:hover { border-color: var(--accent-dim); color: var(--accent) }
-
-    /* --- Section --- */
-    .section {
-      padding: 6rem 0;
-      border-top: 1px solid var(--line);
-    }
-
-    .section-label {
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--accent-dim);
-      margin-bottom: 2rem;
-    }
-
-    .section-grid {
+    .frame {
+      height: 100%;
+      background: var(--sheet);
+      border: 1px solid var(--rule);
+      box-shadow: 5px 5px 0 var(--ink);
       display: grid;
-      grid-template-columns: 1fr 1.3fr;
-      gap: 4rem;
-      align-items: start;
+      grid-template-columns: minmax(320px, 0.85fr) 1.4fr;
+      overflow: hidden;
     }
 
-    .section-heading {
-      font-family: var(--serif);
-      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
-      font-weight: 400;
-      line-height: 1.15;
-      letter-spacing: -0.01em;
-    }
-
-    .section-heading em { font-style: italic; color: var(--accent) }
-
-    .section-text {
-      font-size: 1.05rem;
-      line-height: 1.8;
-      color: var(--fg-muted);
-    }
-
-    .section-text p + p { margin-top: 1.25rem }
-    .section-text strong { color: var(--fg); font-weight: 500 }
-
-    /* --- Projects --- */
-    .projects-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 2rem;
-      margin-bottom: 3rem;
-      flex-wrap: wrap;
-    }
-
-    .projects-head p {
-      max-width: 42ch;
-      color: var(--fg-muted);
-    }
-
-    .projects {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
-
-    .card {
+    .pane {
+      padding: 34px 38px;
+      overflow-y: auto;
       display: flex;
       flex-direction: column;
-      background: var(--bg-raised);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 2rem;
-      transition: border-color 0.3s ease, transform 0.3s ease;
     }
 
-    .card:hover {
-      border-color: rgba(196,164,108,0.35);
-      transform: translateY(-3px);
+    .left { border-right: 1px solid var(--rule) }
+
+    .mono {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      color: var(--ink-soft);
     }
 
-    .card-top {
+    .label {
+      font-family: var(--mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .label::after {
+      content: '';
+      flex: 1;
+      border-top: 3px double var(--rule);
+    }
+
+    /* ---------- Left pane ---------- */
+    h1 {
+      font-weight: 600;
+      font-size: 46px;
+      line-height: 1;
+      letter-spacing: -0.015em;
+    }
+
+    .roles { margin-top: 10px }
+
+    .bio { margin-top: 26px }
+    .bio p + p { margin-top: 12px }
+    .bio .hi { background: var(--hi); padding: 0 2px }
+
+    .now { margin-top: 26px }
+
+    .now ul { list-style: none }
+
+    .now li {
+      font-size: 15.5px;
+      padding: 3px 0;
+      display: flex;
+      gap: 10px;
+    }
+
+    .now li::before {
+      content: '→';
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--red);
+      padding-top: 2px;
+    }
+
+    .contact {
+      margin-top: auto;
+      padding-top: 24px;
+    }
+
+    .contact .email {
+      font-family: var(--mono);
+      font-size: 15px;
+    }
+
+    .colophon {
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--faint);
       display: flex;
       justify-content: space-between;
-      align-items: start;
-      margin-bottom: 1.5rem;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 11px;
     }
 
-    .app-icon {
-      width: 64px;
-      height: 64px;
-      border-radius: 15px;
+    /* ---------- Right pane ---------- */
+    .projects { list-style: none }
+
+    .project {
+      display: grid;
+      grid-template-columns: 26px 52px 1fr;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px dashed var(--faint);
+    }
+
+    .project:first-child { padding-top: 4px }
+
+    .num {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-soft);
+      padding-top: 6px;
+    }
+
+    .icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      border: 1px solid var(--ink);
       background: #fff;
       object-fit: cover;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
     }
 
-    .badge {
-      font-size: 0.68rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
+    .project-head {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 4px 12px;
+    }
+
+    .project h2 {
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .project .what { font-style: italic; color: var(--ink-soft) }
+
+    .project p {
+      margin-top: 4px;
+      font-size: 15.5px;
+      line-height: 1.45;
+    }
+
+    .project .meta {
+      margin-top: 7px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 16px;
+    }
+
+    .stamp {
+      font-family: var(--mono);
+      font-size: 10.5px;
       text-transform: uppercase;
-      padding: 0.3rem 0.65rem;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      color: var(--fg-muted);
-      white-space: nowrap;
-    }
-
-    .badge.live { color: #9fd49a; border-color: rgba(159,212,154,0.3) }
-
-    .card h3 {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: 1.9rem;
-      line-height: 1.1;
-    }
-
-    .card .tagline {
-      margin-top: 0.35rem;
-      font-size: 0.9rem;
-      color: var(--accent);
-    }
-
-    .card .desc {
-      margin-top: 1rem;
-      font-size: 0.95rem;
-      line-height: 1.7;
-      color: var(--fg-muted);
-      flex: 1;
-    }
-
-    .stack {
-      margin-top: 1.25rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-
-    .stack span {
-      font-size: 0.72rem;
-      padding: 0.2rem 0.55rem;
-      border-radius: 6px;
-      background: rgba(255,255,255,0.04);
-      color: var(--fg-muted);
-    }
-
-    .card-links {
-      margin-top: 1.75rem;
-      padding-top: 1.25rem;
-      border-top: 1px solid var(--line);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.25rem;
-    }
-
-    .card-links a, .card-links .muted {
-      font-size: 0.88rem;
-      text-decoration: none;
-    }
-
-    .card-links a {
-      color: var(--fg);
-      transition: color 0.3s ease;
-    }
-
-    .card-links a:hover { color: var(--accent) }
-    .card-links .muted { color: var(--fg-muted) }
-
-    .card-links a .arrow {
+      letter-spacing: 0.06em;
+      border: 1px solid currentColor;
+      padding: 1px 6px;
+      transform: rotate(-2deg);
       display: inline-block;
-      margin-left: 0.25rem;
-      transition: transform 0.3s ease;
     }
 
-    .card-links a:hover .arrow { transform: translate(2px, -2px) }
+    .stamp.live { color: #2f6b3a }
+    .stamp.rough { color: var(--red) }
 
-    /* --- Hobbies --- */
-    .hobbies {
+    .offclock {
+      margin-top: 26px;
+    }
+
+    .notes {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.75rem 2.5rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 28px;
     }
 
-    .hobby h4 {
-      font-size: 1rem;
+    .note h3 {
+      font-family: var(--mono);
+      font-size: 12.5px;
       font-weight: 500;
-      color: var(--fg);
-      margin-bottom: 0.35rem;
+      margin-bottom: 2px;
     }
 
-    .hobby p {
-      font-size: 0.95rem;
-      line-height: 1.7;
-      color: var(--fg-muted);
+    .note p {
+      font-size: 15px;
+      line-height: 1.45;
+      color: var(--ink-soft);
     }
 
-    /* --- Contact --- */
-    .contact-link {
-      display: inline-block;
-      margin-top: 1.5rem;
-      font-size: 1.05rem;
-      color: var(--accent);
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.3s ease;
+    /* ---------- Small screens: stack and scroll normally ---------- */
+    @media (max-width: 860px) {
+      .sheet { height: auto; padding: 12px }
+      .frame { grid-template-columns: 1fr; box-shadow: 3px 3px 0 var(--ink) }
+      .left { border-right: 0; border-bottom: 1px solid var(--rule) }
+      .pane { padding: 26px 20px; overflow: visible }
+      .contact { margin-top: 26px }
+      .notes { grid-template-columns: 1fr }
+      h1 { font-size: 40px }
     }
 
-    .contact-link:hover { border-bottom-color: var(--accent) }
-
-    .contact-link .arrow {
-      display: inline-block;
-      margin-left: 0.4rem;
-      transition: transform 0.3s ease;
+    @media (max-width: 420px) {
+      .project { grid-template-columns: 44px 1fr; gap: 12px }
+      .num { display: none }
+      .icon { width: 44px; height: 44px; border-radius: 10px }
     }
 
-    .contact-link:hover .arrow { transform: translateX(4px) }
-
-    /* --- Footer --- */
-    footer {
-      padding: 3rem 0;
-      border-top: 1px solid var(--line);
-    }
-
-    .footer-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      font-size: 0.8rem;
-      color: var(--fg-muted);
-    }
-
-    .footer-inner a {
-      color: var(--fg-muted);
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    .footer-inner a:hover { color: var(--accent) }
-
-    /* --- Scroll animations --- */
-    .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px) }
-      to { opacity: 1; transform: translateY(0) }
-    }
-
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-12px) }
-      to { opacity: 1; transform: translateY(0) }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation: none !important; transition: none !important }
-      header, .eyebrow, .hero h1, .hero-sub, .hero-links, .reveal { opacity: 1; transform: none }
-    }
-
-    /* --- Responsive --- */
-    @media (max-width: 960px) {
-      .projects { grid-template-columns: 1fr; max-width: 560px }
-    }
-
-    @media (max-width: 768px) {
-      .container { padding: 0 1rem }
-      .section-grid { grid-template-columns: 1fr; gap: 1.5rem }
-      .hobbies { grid-template-columns: 1fr }
-      .hero { padding: 2.5rem 0 4rem }
-      .section { padding: 4rem 0 }
-      header { padding: 1.75rem 0 }
-      nav { gap: 1.25rem }
-      .card { padding: 1.5rem }
-    }
-
-    @media (max-width: 480px) {
-      nav { display: none }
+    /* Short desktop windows: tighten up so it still fits */
+    @media (min-width: 861px) and (max-height: 820px) {
+      body { font-size: 16px }
+      .sheet { padding: 16px }
+      .pane { padding: 26px 32px }
+      h1 { font-size: 40px }
+      .bio, .now, .offclock { margin-top: 18px }
+      .project { padding: 11px 0 }
+      .project p, .now li { font-size: 14.5px }
+      .note p { font-size: 14px }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="container header-inner">
-      <a href="#" class="wordmark">Matt Audette</a>
-      <nav>
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-      </nav>
+  <div class="sheet">
+    <div class="frame">
+
+      <aside class="pane left">
+        <h1>Matt Audette</h1>
+        <div class="roles mono">engineering leader / builder / dad / golfer</div>
+
+        <div class="bio">
+          <p>Hi! I've been building software for <span class="hi">15+ years</span>. These days I'm a Director of Engineering at Yahoo, where I lead teams that build and run products at scale.</p>
+          <p>I never stopped writing code, though. Audette Ventures is my workshop for building my own apps end to end: design, web, iOS, backend, launch. Each one started as a problem in my own life that I wanted solved.</p>
+        </div>
+
+        <div class="now">
+          <div class="label">Now</div>
+          <ul>
+            <li>Leading engineering at Yahoo</li>
+            <li>Shipping updates to Basis</li>
+            <li>Getting Your Tour onto iOS</li>
+            <li>Coaching whatever season it is</li>
+          </ul>
+        </div>
+
+        <div class="contact">
+          <div class="label">Say hello</div>
+          <a class="email" href="mailto:matt@maudette.com">matt@maudette.com</a>
+          <div class="colophon mono">
+            <span>Winter Garden, FL</span>
+            <span>&copy; <span id="yr">2026</span> Audette Ventures, LLC</span>
+          </div>
+        </div>
+      </aside>
+
+      <main class="pane right">
+        <div class="label">Things I've made</div>
+        <ol class="projects">
+          <li class="project">
+            <span class="num">01</span>
+            <img class="icon" src="assets/basis.png" alt="Basis app icon" width="52" height="52">
+            <div>
+              <div class="project-head">
+                <h2>Basis</h2>
+                <span class="what">expense tracking for rental investors</span>
+              </div>
+              <p>I own several rental properties, and every tax season I was scrambling through emails, text messages and Google Docs. I created Basis in March while scrambling to get reports to my accountant, and I've used it every year since!</p>
+              <div class="meta mono">
+                <span class="stamp live">live on iOS + web</span>
+                <a href="https://getbasis.io" target="_blank" rel="noopener">getbasis.io</a>
+                <a href="https://apps.apple.com/us/app/basis-rental-expense-tracker/id6760377525" target="_blank" rel="noopener">App Store</a>
+              </div>
+            </div>
+          </li>
+
+          <li class="project">
+            <span class="num">02</span>
+            <img class="icon" src="assets/yourtour.png" alt="Your Tour app icon" width="52" height="52">
+            <div>
+              <div class="project-head">
+                <h2>Your Tour</h2>
+                <span class="what">fantasy golf for buddies trips</span>
+              </div>
+              <p>I go on several golf trips with the boys every year, and competition and a little smack talk are requirements. Your Tour gives us a platform to do all of that and more. This one was really fun to work on!</p>
+              <div class="meta mono">
+                <span class="stamp live">live</span>
+                <a href="https://yourtourplay.com" target="_blank" rel="noopener">yourtourplay.com</a>
+                <span>iOS app coming soon</span>
+              </div>
+            </div>
+          </li>
+
+          <li class="project">
+            <span class="num">03</span>
+            <img class="icon" src="assets/benchboss.png" alt="Bench Boss app icon" width="52" height="52">
+            <div>
+              <div class="project-head">
+                <h2>Bench Boss</h2>
+                <span class="what">fair playing time for youth coaches</span>
+              </div>
+              <p>Built from years on the sideline coaching my boys' teams with a clipboard or the Notes app on my phone to track lineups. Now I can plan lineups right in the app and make game day easy. It ain't pretty, but it gets the job done for me!</p>
+              <div class="meta mono">
+                <span class="stamp rough">early release</span>
+                <a href="https://apps.apple.com/us/app/bench-boss-sports-lineups/id6757727588" target="_blank" rel="noopener">App Store</a>
+              </div>
+            </div>
+          </li>
+        </ol>
+
+        <div class="offclock">
+          <div class="label">Off the clock</div>
+          <div class="notes">
+            <div class="note">
+              <h3>Dad &amp; coach</h3>
+              <p>My boys are everything. 7 and 11, and they don't stop! Sports, bikes and Pok&eacute;mon cards, all day, every day!</p>
+            </div>
+            <div class="note">
+              <h3>Golf</h3>
+              <p>I love the game, and golf trips with friends are a long-running tradition.</p>
+            </div>
+            <div class="note">
+              <h3>Staying active</h3>
+              <p>Workouts, rounds of golf, chasing kids around a field. Sitting still was never really my thing.</p>
+            </div>
+            <div class="note">
+              <h3>Real estate</h3>
+              <p>Buying, renovating, and renting out multifamily homes.</p>
+            </div>
+          </div>
+        </div>
+      </main>
+
     </div>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="container">
-        <div class="eyebrow">Engineering Leader &middot; Builder</div>
-        <h1>I lead teams and <em>ship products.</em></h1>
-        <p class="hero-sub">I'm Matt Audette, a Director of Engineering at Yahoo with 15+ years in the software industry. Outside the day job I design, build, and launch my own products under Audette Ventures, from first sketch to the App Store.</p>
-        <div class="hero-links">
-          <a href="#projects" class="btn btn-primary">See my projects &darr;</a>
-          <a href="mailto:matt@maudette.com" class="btn btn-ghost">Get in touch</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section reveal" id="about">
-      <div class="container">
-        <div class="section-label">About</div>
-        <div class="section-grid">
-          <div class="section-heading">Leading engineering by day.<br><em>Building</em> by night.</div>
-          <div class="section-text">
-            <p>I've spent <strong>15+ years</strong> in the software industry, first as an engineer and now as a leader. At <strong>Yahoo</strong> I lead engineering teams that build and run products at scale: hiring, setting technical direction, and making sure good software actually ships.</p>
-            <p>I keep my hands on the keyboard too. <strong>Audette Ventures</strong> is where I build my own products end to end, covering product design, web and mobile apps, backend, infrastructure, and launch. Each one started as a problem in my own life that I wanted solved.</p>
-            <p>I'm also a partner in a small real-estate firm that owns and renovates multifamily rentals in southeastern Massachusetts. That work is where Basis came from.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section reveal" id="projects">
-      <div class="container">
-        <div class="projects-head">
-          <div>
-            <div class="section-label">Projects</div>
-            <div class="section-heading">Things I've built.</div>
-          </div>
-          <p>Each one is designed, built, and shipped by me: web apps, native iOS apps, and the backends behind them.</p>
-        </div>
-
-        <div class="projects">
-          <article class="card">
-            <div class="card-top">
-              <img class="app-icon" src="assets/basis.png" alt="Basis app icon" width="64" height="64">
-              <span class="badge live">Live on iOS</span>
-            </div>
-            <h3>Basis</h3>
-            <div class="tagline">Rental expense tracking for real-estate investors</div>
-            <p class="desc">Turns a year of messy receipts and bank transactions into something your accountant can file. Built for small landlords and renovators: snap receipts on your phone, then batch-review, categorize by property and project, and export tax-ready reports on the web.</p>
-            <div class="stack"><span>Next.js</span><span>React Native</span><span>Expo</span><span>Supabase</span><span>AI categorization</span></div>
-            <div class="card-links">
-              <a href="https://basis.io" target="_blank" rel="noopener">basis.io<span class="arrow">&nearr;</span></a>
-              <a href="https://apps.apple.com/us/app/basis-rental-expense-tracker/id6760377525" target="_blank" rel="noopener">App Store<span class="arrow">&nearr;</span></a>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="card-top">
-              <img class="app-icon" src="assets/yourtour.png" alt="Your Tour app icon" width="64" height="64">
-              <span class="badge live">Live</span>
-            </div>
-            <h3>Your Tour</h3>
-            <div class="tagline">Fantasy golf for buddies trips</div>
-            <p class="desc">Daily-fantasy-style golf for your actual friends. The commissioner builds a player pool of everyone on the trip, managers draft 6-golfer lineups under a salary cap, and everyone scores hole by hole on their phone for a live, handicap-adjusted leaderboard.</p>
-            <div class="stack"><span>Next.js</span><span>TypeScript</span><span>Supabase Realtime</span><span>Expo</span><span>Vercel</span></div>
-            <div class="card-links">
-              <a href="https://yourtourplay.com" target="_blank" rel="noopener">yourtourplay.com<span class="arrow">&nearr;</span></a>
-              <span class="muted">iOS app coming soon</span>
-            </div>
-          </article>
-
-          <article class="card">
-            <div class="card-top">
-              <img class="app-icon" src="assets/benchboss.png" alt="Bench Boss app icon" width="64" height="64">
-              <span class="badge">Early release</span>
-            </div>
-            <h3>Bench Boss</h3>
-            <div class="tagline">Lineups &amp; fair playing time for youth coaches</div>
-            <p class="desc">A simple, offline-first iOS app for volunteer coaches. Set up your roster and formation once, plan rotations before the game, and track playing time automatically so every kid gets a fair shot. Supports small-sided formats like 4v4 and 7v7.</p>
-            <div class="stack"><span>React Native</span><span>Expo</span><span>Offline-first</span></div>
-            <div class="card-links">
-              <a href="https://apps.apple.com/us/app/bench-boss-sports-lineups/id6757727588" target="_blank" rel="noopener">App Store<span class="arrow">&nearr;</span></a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section reveal" id="life">
-      <div class="container">
-        <div class="section-label">Outside of Work</div>
-        <div class="section-grid">
-          <div class="section-heading">Husband, dad of two boys,<br>and <em>always tinkering.</em></div>
-          <div class="hobbies">
-            <div class="hobby">
-              <h4>Coaching my boys</h4>
-              <p>I have two sons, 7 and 11, and I've spent years coaching their youth sports teams. Every game meant juggling a clipboard to make sure each kid got fair playing time. The tools out there were paywalled or built for adult leagues, so I built Bench Boss.</p>
-            </div>
-            <div class="hobby">
-              <h4>Golf</h4>
-              <p>I love the game, and golf trips with friends are one of my favorite traditions. We always wanted a fantasy layer on top of our own rounds, with stakes, trash talk and a live leaderboard. Nothing like that existed, so Your Tour does it now.</p>
-            </div>
-            <div class="hobby">
-              <h4>Staying active</h4>
-              <p>Whether it's a workout, a round of golf, or chasing the kids around a field, I'm happiest on the move. It's how I clear my head between building sessions.</p>
-            </div>
-            <div class="hobby">
-              <h4>Real estate</h4>
-              <p>Buying, renovating, and managing rental properties. Part hobby, part business, and the reason Basis exists.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section reveal" id="contact">
-      <div class="container">
-        <div class="section-label">Contact</div>
-        <div class="section-grid">
-          <div class="section-heading">Want to talk shop?<br>Reach out.</div>
-          <div class="section-text">
-            <p>Whether it's engineering leadership, a product idea, a collaboration, or feedback on one of my apps, I'm happy to connect.</p>
-            <a href="mailto:matt@maudette.com" class="contact-link">matt@maudette.com <span class="arrow">&rarr;</span></a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container footer-inner">
-      <div id="copyright">&copy; Audette Ventures, LLC</div>
-      <a href="mailto:matt@maudette.com">matt@maudette.com</a>
-    </div>
-  </footer>
-
-  <script>
-    document.getElementById('copyright').textContent = '© ' + new Date().getFullYear() + ' Audette Ventures, LLC';
-
-    const els = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
-    }, { threshold: 0.1 });
-    els.forEach(el => observer.observe(el));
-  </script>
+  </div>
+  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 </body>
 </html>
