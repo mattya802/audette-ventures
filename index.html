@@ -3,326 +3,384 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Audette Ventures, LLC</title>
-  <meta name="description" content="Audette Ventures builds and launches SaaS companies.">
+  <title>Matt Audette</title>
+  <meta name="description" content="Matt Audette: engineering leader with 15+ years in software. Builder of Basis, Your Tour, and Bench Boss.">
+  <meta property="og:title" content="Matt Audette">
+  <meta property="og:description" content="Engineering leader, builder, dad, golfer. Basis, Your Tour, and Bench Boss.">
+  <meta property="og:url" content="https://audetteventures.com">
+  <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 
     :root {
-      --bg: #0a0a0a;
-      --fg: #e8e4df;
-      --fg-muted: #7a756f;
-      --accent: #c4a46c;
-      --accent-dim: #9a7d4e;
-      --serif: 'Instrument Serif', Georgia, serif;
-      --sans: 'DM Sans', system-ui, sans-serif;
+      --paper: #f3ede1;
+      --sheet: #fbf8f1;
+      --ink: #23201b;
+      --ink-soft: #5b544a;
+      --rule: #23201b;
+      --faint: #d8cfbd;
+      --red: #b0402a;
+      --hi: #f2dc8c;
+      --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+      --mono: 'IBM Plex Mono', 'Courier New', monospace;
     }
 
-    html { scroll-behavior: smooth }
+    html, body { height: 100% }
 
     body {
-      background: var(--bg);
-      color: var(--fg);
-      font-family: var(--sans);
-      font-weight: 400;
-      line-height: 1.6;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 17px;
+      line-height: 1.5;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
     }
 
-    /* --- Grain overlay --- */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0.03;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      background-size: 256px 256px;
-      z-index: 9999;
+    a { color: var(--red); text-underline-offset: 2px; text-decoration-thickness: 1px }
+    a:hover { background: var(--hi); color: var(--ink) }
+
+    /* The page is one sheet of paper, sized to the window */
+    .sheet {
+      height: 100vh;
+      padding: 22px;
     }
 
-    /* --- Layout --- */
-    .page {
-      min-height: 100vh;
+    .frame {
+      height: 100%;
+      background: var(--sheet);
+      border: 1px solid var(--rule);
+      box-shadow: 5px 5px 0 var(--ink);
+      display: grid;
+      grid-template-columns: minmax(320px, 0.85fr) 1.4fr;
+      overflow: hidden;
+    }
+
+    .pane {
+      padding: 34px 38px;
+      overflow-y: auto;
       display: flex;
       flex-direction: column;
     }
 
-    .container {
-      width: 100%;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 2rem;
+    .left { border-right: 1px solid var(--rule) }
+
+    .mono {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      color: var(--ink-soft);
     }
 
-    /* --- Header --- */
-    header {
-      padding: 2.5rem 0;
-      opacity: 0;
-      animation: fadeDown 0.8s ease forwards;
-    }
-
-    .wordmark {
-      font-family: var(--sans);
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.2em;
+    .label {
+      font-family: var(--mono);
+      font-size: 12px;
       text-transform: uppercase;
-      color: var(--fg-muted);
-    }
-
-    /* --- Hero --- */
-    .hero {
-      flex: 1;
+      letter-spacing: 0.08em;
       display: flex;
       align-items: center;
-      padding: 4rem 0 6rem;
+      gap: 10px;
+      margin-bottom: 14px;
     }
 
-    .hero-inner {
-      width: 100%;
+    .label::after {
+      content: '';
+      flex: 1;
+      border-top: 3px double var(--rule);
     }
 
-    .hero h1 {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: clamp(3rem, 8vw, 6.5rem);
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-      color: var(--fg);
-      max-width: 14ch;
-      opacity: 0;
-      animation: fadeUp 1s ease 0.2s forwards;
+    /* ---------- Left pane ---------- */
+    h1 {
+      font-weight: 600;
+      font-size: 46px;
+      line-height: 1;
+      letter-spacing: -0.015em;
     }
 
-    .hero h1 em {
-      font-style: italic;
-      color: var(--accent);
+    .roles { margin-top: 10px }
+
+    .bio { margin-top: 26px }
+    .bio p + p { margin-top: 12px }
+    .bio .hi { background: var(--hi); padding: 0 2px }
+
+    .now { margin-top: 26px }
+
+    .now ul { list-style: none }
+
+    .now li {
+      font-size: 15.5px;
+      padding: 3px 0;
+      display: flex;
+      gap: 10px;
     }
 
-    .hero-sub {
-      margin-top: 2.5rem;
-      max-width: 48ch;
-      font-size: 1.1rem;
-      line-height: 1.7;
-      color: var(--fg-muted);
-      opacity: 0;
-      animation: fadeUp 1s ease 0.45s forwards;
+    .now li::before {
+      content: '→';
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--red);
+      padding-top: 2px;
     }
 
-    .divider {
-      width: 3rem;
-      height: 1px;
-      background: var(--accent-dim);
-      margin: 3rem 0;
-      opacity: 0;
-      animation: fadeUp 1s ease 0.6s forwards;
+    .contact {
+      margin-top: auto;
+      padding-top: 24px;
     }
 
-    /* --- Section --- */
-    .section {
-      padding: 5rem 0;
-      border-top: 1px solid rgba(255,255,255,0.06);
+    .contact .email {
+      font-family: var(--mono);
+      font-size: 15px;
     }
 
-    .section-label {
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--accent-dim);
-      margin-bottom: 2rem;
-    }
-
-    .section-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: start;
-    }
-
-    .section-text {
-      font-size: 1.05rem;
-      line-height: 1.8;
-      color: var(--fg-muted);
-    }
-
-    .section-text p + p {
-      margin-top: 1.25rem;
-    }
-
-    .section-heading {
-      font-family: var(--serif);
-      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-      font-weight: 400;
-      line-height: 1.2;
-      letter-spacing: -0.01em;
-      color: var(--fg);
-    }
-
-    /* --- Contact --- */
-    .contact-link {
-      display: inline-block;
-      margin-top: 1.5rem;
-      font-size: 1.05rem;
-      color: var(--accent);
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.3s ease;
-    }
-
-    .contact-link:hover {
-      border-bottom-color: var(--accent);
-    }
-
-    .contact-link .arrow {
-      display: inline-block;
-      margin-left: 0.4rem;
-      transition: transform 0.3s ease;
-    }
-
-    .contact-link:hover .arrow {
-      transform: translateX(4px);
-    }
-
-    /* --- Footer --- */
-    footer {
-      padding: 3rem 0;
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .footer-inner {
+    .colophon {
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--faint);
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      gap: 8px;
       flex-wrap: wrap;
-      gap: 1rem;
+      font-size: 11px;
     }
 
-    .footer-copy {
-      font-size: 0.8rem;
-      color: var(--fg-muted);
+    /* ---------- Right pane ---------- */
+    .projects { list-style: none }
+
+    .project {
+      display: grid;
+      grid-template-columns: 26px 52px 1fr;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px dashed var(--faint);
     }
 
-    .footer-email a {
-      font-size: 0.8rem;
-      color: var(--fg-muted);
-      text-decoration: none;
-      transition: color 0.3s ease;
+    .project:first-child { padding-top: 4px }
+
+    .num {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--ink-soft);
+      padding-top: 6px;
     }
 
-    .footer-email a:hover {
-      color: var(--accent);
+    .icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      border: 1px solid var(--ink);
+      background: #fff;
+      object-fit: cover;
     }
 
-    /* --- Scroll animations --- */
-    .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+    .project-head {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 4px 12px;
     }
 
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
+    .project h2 {
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 1.2;
     }
 
-    /* --- Keyframes --- */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px) }
-      to { opacity: 1; transform: translateY(0) }
+    .project .what { font-style: italic; color: var(--ink-soft) }
+
+    .project p {
+      margin-top: 4px;
+      font-size: 15.5px;
+      line-height: 1.45;
     }
 
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-12px) }
-      to { opacity: 1; transform: translateY(0) }
+    .project .meta {
+      margin-top: 7px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 16px;
     }
 
-    /* --- Responsive --- */
-    @media (max-width: 768px) {
-      .section-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
+    .stamp {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border: 1px solid currentColor;
+      padding: 1px 6px;
+      transform: rotate(-2deg);
+      display: inline-block;
+    }
 
-      .hero {
-        padding: 2rem 0 4rem;
-      }
+    .stamp.live { color: #2f6b3a }
+    .stamp.rough { color: var(--red) }
 
-      .section {
-        padding: 3.5rem 0;
-      }
+    .offclock {
+      margin-top: 26px;
+    }
 
-      header { padding: 2rem 0 }
+    .notes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 28px;
+    }
+
+    .note h3 {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .note p {
+      font-size: 15px;
+      line-height: 1.45;
+      color: var(--ink-soft);
+    }
+
+    /* ---------- Small screens: stack and scroll normally ---------- */
+    @media (max-width: 860px) {
+      .sheet { height: auto; padding: 12px }
+      .frame { grid-template-columns: 1fr; box-shadow: 3px 3px 0 var(--ink) }
+      .left { border-right: 0; border-bottom: 1px solid var(--rule) }
+      .pane { padding: 26px 20px; overflow: visible }
+      .contact { margin-top: 26px }
+      .notes { grid-template-columns: 1fr }
+      h1 { font-size: 40px }
+    }
+
+    @media (max-width: 420px) {
+      .project { grid-template-columns: 44px 1fr; gap: 12px }
+      .num { display: none }
+      .icon { width: 44px; height: 44px; border-radius: 10px }
+    }
+
+    /* Short desktop windows: tighten up so it still fits */
+    @media (min-width: 861px) and (max-height: 820px) {
+      body { font-size: 16px }
+      .sheet { padding: 16px }
+      .pane { padding: 26px 32px }
+      h1 { font-size: 40px }
+      .bio, .now, .offclock { margin-top: 18px }
+      .project { padding: 11px 0 }
+      .project p, .now li { font-size: 14.5px }
+      .note p { font-size: 14px }
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <header>
-      <div class="container">
-        <div class="wordmark">Audette Ventures</div>
-      </div>
-    </header>
+  <div class="sheet">
+    <div class="frame">
 
-    <section class="hero">
-      <div class="container">
-        <div class="hero-inner">
-          <h1>We build <em>software</em> that works.</h1>
-          <p class="hero-sub">Audette Ventures is a venture studio focused on building, launching, and growing SaaS products from the ground up.</p>
-          <div class="divider"></div>
+      <aside class="pane left">
+        <h1>Matt Audette</h1>
+        <div class="roles mono">engineering leader / builder / dad / golfer</div>
+
+        <div class="bio">
+          <p>Hi! I've been building software for <span class="hi">15+ years</span>. These days I'm a Director of Engineering at Yahoo, where I lead teams that build and run products at scale.</p>
+          <p>I never stopped writing code, though. Audette Ventures is my workshop for building my own apps end to end: design, web, iOS, backend, launch. Each one started as a problem in my own life that I wanted solved.</p>
         </div>
-      </div>
-    </section>
 
-    <section class="section reveal">
-      <div class="container">
-        <div class="section-label">What We Do</div>
-        <div class="section-grid">
-          <div class="section-heading">Idea to product.<br>Product to revenue.</div>
-          <div class="section-text">
-            <p>Audette Ventures identifies opportunities in software, builds the product, and brings it to market. Every venture is designed to be lean, focused, and built to generate revenue.</p>
-            <p>No pitch decks. No fundraising roadshows. Just shipping products that solve real problems.</p>
+        <div class="now">
+          <div class="label">Now</div>
+          <ul>
+            <li>Leading engineering at Yahoo</li>
+            <li>Shipping updates to Basis</li>
+            <li>Getting Your Tour onto iOS</li>
+            <li>Coaching whatever season it is</li>
+          </ul>
+        </div>
+
+        <div class="contact">
+          <div class="label">Say hello</div>
+          <a class="email" href="mailto:matt@maudette.com">matt@maudette.com</a>
+          <div class="colophon mono">
+            <span>Winter Garden, FL</span>
+            <span>&copy; <span id="yr">2026</span> Audette Ventures, LLC</span>
           </div>
         </div>
-      </div>
-    </section>
+      </aside>
 
-    <section class="section reveal">
-      <div class="container">
-        <div class="section-label">Get in Touch</div>
-        <div class="section-grid">
-          <div class="section-heading">Have an idea?<br>Let's talk.</div>
-          <div class="section-text">
-            <p>Whether it's a potential collaboration, a partnership opportunity, or just a conversation about building products — reach out.</p>
-            <a href="mailto:matt@maudette.com" class="contact-link">matt@maudette.com <span class="arrow">&rarr;</span></a>
+      <main class="pane right">
+        <div class="label">Things I've made</div>
+        <ol class="projects">
+          <li class="project">
+            <span class="num">01</span>
+            <img class="icon" src="assets/basis.png" alt="Basis app icon" width="52" height="52">
+            <div>
+              <div class="project-head">
+                <h2>Basis</h2>
+                <span class="what">expense tracking for rental investors</span>
+              </div>
+              <p>I own several rental properties, and every tax season I was scrambling through emails, text messages and Google Docs. I created Basis in March while scrambling to get reports to my accountant, and I've used it every year since!</p>
+              <div class="meta mono">
+                <span class="stamp live">live on iOS + web</span>
+                <a href="https://getbasis.io" target="_blank" rel="noopener">getbasis.io</a>
+                <a href="https://apps.apple.com/us/app/basis-rental-expense-tracker/id6760377525" target="_blank" rel="noopener">App Store</a>
+              </div>
+            </div>
+          </li>
+
+          <li class="project">
+            <span class="num">02</span>
+            <img class="icon" src="assets/yourtour.png" alt="Your Tour app icon" width="52" height="52">
+            <div>
+              <div class="project-head">
+                <h2>Your Tour</h2>
+                <span class="what">fantasy golf for buddies trips</span>
+              </div>
+              <p>I go on several golf trips with the boys every year, and competition and a little smack talk are requirements. Your Tour gives us a platform to do all of that and more. This one was really fun to work on!</p>
+              <div class="meta mono">
+                <span class="stamp live">live</span>
+                <a href="https://yourtourplay.com" target="_blank" rel="noopener">yourtourplay.com</a>
+                <span>iOS app coming soon</span>
+              </div>
+            </div>
+          </li>
+
+          <li class="project">
+            <span class="num">03</span>
+            <img class="icon" src="assets/benchboss.png" alt="Bench Boss app icon" width="52" height="52">
+            <div>
+              <div class="project-head">
+                <h2>Bench Boss</h2>
+                <span class="what">fair playing time for youth coaches</span>
+              </div>
+              <p>Built from years on the sideline coaching my boys' teams with a clipboard or the Notes app on my phone to track lineups. Now I can plan lineups right in the app and make game day easy. It ain't pretty, but it gets the job done for me!</p>
+              <div class="meta mono">
+                <span class="stamp rough">early release</span>
+                <a href="https://apps.apple.com/us/app/bench-boss-sports-lineups/id6757727588" target="_blank" rel="noopener">App Store</a>
+              </div>
+            </div>
+          </li>
+        </ol>
+
+        <div class="offclock">
+          <div class="label">Off the clock</div>
+          <div class="notes">
+            <div class="note">
+              <h3>Dad &amp; coach</h3>
+              <p>My boys are everything. 7 and 11, and they don't stop! Sports, bikes and Pok&eacute;mon cards, all day, every day!</p>
+            </div>
+            <div class="note">
+              <h3>Golf</h3>
+              <p>I love the game, and golf trips with friends are a long-running tradition.</p>
+            </div>
+            <div class="note">
+              <h3>Staying active</h3>
+              <p>Workouts, rounds of golf, chasing kids around a field. Sitting still was never really my thing.</p>
+            </div>
+            <div class="note">
+              <h3>Real estate</h3>
+              <p>Buying, renovating, and renting out multifamily homes.</p>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </main>
 
-    <footer>
-      <div class="container">
-        <div class="footer-inner">
-          <div class="footer-copy" id="copyright"></div>
-          <div class="footer-email"><a href="mailto:matt@maudette.com">matt@maudette.com</a></div>
-        </div>
-      </div>
-    </footer>
+    </div>
   </div>
-
-  <script>
-    document.getElementById('copyright').textContent = '\u00A9 ' + new Date().getFullYear() + ' Audette Ventures, LLC';
-
-    const els = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }});
-    }, { threshold: 0.15 });
-    els.forEach(el => observer.observe(el));
-  </script>
+  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 </body>
 </html>
